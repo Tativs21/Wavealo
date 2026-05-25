@@ -3,12 +3,14 @@ package com.wavealo.model;
 public class Categoria {
     private int id;
     private String nome;
+    private boolean attivo;
 
     public Categoria() {}
 
-    public Categoria(int id, String nome) {
+    public Categoria(int id, String nome, boolean attivo) {
         this.id = id;
         this.nome = nome;
+        this.attivo = attivo;
     }
 
     public int getId() {
@@ -25,5 +27,13 @@ public class Categoria {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isAttivo() {
+        return attivo;
+    }
+
+    public void setAttivo(boolean attivo) {
+        this.attivo = attivo;
     }
 }
