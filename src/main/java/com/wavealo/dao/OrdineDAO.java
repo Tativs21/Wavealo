@@ -72,9 +72,9 @@ public class OrdineDAO {
         }
     }
 
-    public void addOrdine(Ordine o) throws Exception{
+    public int addOrdine(Ordine o) throws Exception{
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement("INSERT INTO ordine (utente_id, citta, CAP, via, numero_civico, data_ordine) VALUES (?, ?, ?, ?, ?, ?);");) {
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO ordine (utente_id, citta, CAP, via, numero_civico, data_ordine) VALUES (?, ?, ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, o.getUtenteId());
             ps.setString(2, o.getCitta());
             ps.setString(3, o.getCAP());
@@ -82,6 +82,11 @@ public class OrdineDAO {
             ps.setString(5, o.getNumeroCivico());
             ps.setDate(6, o.getDataOrdine());
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+            return -1;
         }
     }
 
